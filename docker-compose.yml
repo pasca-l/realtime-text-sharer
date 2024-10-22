@@ -14,3 +14,24 @@ services:
     ports:
       - 3000:3000
       - 9005:9005 # for firebase login
+    networks:
+      - websocket
+
+  server:
+    build:
+      context: ./server/
+    platform: linux/amd64
+    volumes:
+      - type: bind
+        source: ./server/src/
+        target: /home/local/
+    stdin_open: true
+    tty: true
+    ports:
+      - 8080:8080
+    networks:
+      - websocket
+
+networks:
+  websocket:
+    driver: bridge
