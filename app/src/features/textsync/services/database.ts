@@ -2,7 +2,7 @@ import { get, onValue, ref, remove, set } from "firebase/database";
 
 import { Service } from "./service";
 
-import { DATABASE } from "@/utils/firebase/firebaseConfig";
+import { DATABASE } from "@/config/firebaseConfig";
 
 const addData = async (roomId: string) => {
   await set(ref(DATABASE, `${roomId}/`), "");
