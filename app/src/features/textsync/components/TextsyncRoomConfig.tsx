@@ -40,7 +40,7 @@ export default function TextsyncRoomConfig() {
       <div className="flex justify-center space-x-4 my-4">
         <TextsyncRoomButton
           allowed={codeStatus === "empty" && roomStatus === "idle"}
-          onClick={async () => {
+          onClick={() => {
             enterRoom({ id: generateRoomId() }, "created");
             setDisableInput(true);
           }}

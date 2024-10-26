@@ -6,10 +6,12 @@ import { useTextsyncContext } from "../contexts/TextsyncContext";
 import { service } from "../services/service";
 
 export default function TextsyncRoomCleanup() {
-  const { room } = useTextsyncContext();
+  const { room, roomStatus } = useTextsyncContext();
 
   const handleCleanup = () => {
-    service.deleteData(room.id);
+    if (roomStatus === "created") {
+      service.deleteData(room.id);
+    }
   };
 
   useEffect(() => {
