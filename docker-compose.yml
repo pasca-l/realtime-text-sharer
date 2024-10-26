@@ -16,6 +16,10 @@ services:
       - 9005:9005 # for firebase login
     networks:
       - websocket
+    depends_on:
+      - server
+    command: >
+      sh -c "npm run dev"
 
   server:
     build:
@@ -31,6 +35,8 @@ services:
       - 8080:8080
     networks:
       - websocket
+    command: >
+      sh -c "go run main.go"
 
 networks:
   websocket:
