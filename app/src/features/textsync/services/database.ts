@@ -8,18 +8,25 @@ const addData = async (roomId: string) => {
   await set(ref(DATABASE, `${roomId}/`), "");
 };
 
-const getData = async (roomId: string) => {
+const getData = async (
+  roomId: string,
+  setContent: (content: string) => void
+) => {
   const snapshot = await get(ref(DATABASE, `${roomId}/`));
   if (snapshot.exists()) {
-    return snapshot.val();
+    setContent(snapshot.val());
   } else {
     throw new Error(`room ${roomId} doesn't seem to exist...`);
   }
 };
 
 const updateData = async (roomId: string, content: string) => {
-  await getData(roomId);
-  await set(ref(DATABASE, `${roomId}/`), content);
+  const snapshot = await get(ref(DATABASE, `${roomId}/`));
+  if (snapshot.exists()) {
+    await set(ref(DATABASE, `${roomId}/`), content);
+  } else {
+    throw new Error(`room ${roomId} doesn't seem to exist...`);
+  }
 };
 
 const unsubscribeData = (

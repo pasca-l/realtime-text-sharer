@@ -3,7 +3,10 @@ import { websocketService } from "./websocket";
 
 export interface Service {
   addData: (roomId: string) => Promise<void>;
-  getData: (roomId: string) => Promise<string>;
+  getData: (
+    roomId: string,
+    setContent: (content: string) => void
+  ) => Promise<void>;
   deleteData: (roomId: string) => Promise<void>;
   updateData: (roomId: string, content: string) => Promise<void>;
   unsubscribeData: (

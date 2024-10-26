@@ -28,7 +28,7 @@ function TextsyncRoomTextArea({ roomId }: { roomId: string }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setContent(await service.getData(roomId));
+        await service.getData(roomId, setContent);
       } catch (error) {
         setErrorMsg((error as Error).message);
       }
