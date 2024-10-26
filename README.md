@@ -16,12 +16,41 @@ https://realtime-text-sharer.vercel.app/
 - Firebase
 
 ## Run on development mode
-1. Set up docker container, and enter container.
-```bash
-$ docker compose up -d && docker compose exec app bash
+### Using local WebSocket server
+1. Set environmental variable as below in `.env`, below is the default value.
+```
+NEXT_PUBLIC_USE_WEBSOCKET="true"
 ```
 
-2. Run application.
+2. Set up docker containers.
 ```bash
-$ npm i && npm run dev
+$ docker compose up
 ```
+
+3. Open website on [`http://localhost:3000`](http://localhost:3000).
+
+### Using Firebase Realtime Database
+1. Configure Firebase settings.
+
+- [`firebaseConfig.ts`](https://github.com/pasca-l/realtime-text-sharer/blob/main/app/src/config/firebaseConfig.ts) should have configurations to accessible Firebase project.
+- Security rules of the Firebase Realtime Database should enable both read and write permissions.
+  ```json
+  {
+    "rules": {
+      ".read": true,
+      ".write": true
+    }
+  }
+  ```
+
+2. Set environmental variable as below in `.env`.
+```
+NEXT_PUBLIC_USE_WEBSOCKET="false"
+```
+
+3. Set up docker containers.
+```bash
+$ docker compose up
+```
+
+4. Open website on [`http://localhost:3000`](http://localhost:3000).
