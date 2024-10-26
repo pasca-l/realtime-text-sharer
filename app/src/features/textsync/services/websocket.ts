@@ -1,33 +1,54 @@
 import { Service } from "./service";
+import { Message } from "../types/message";
+
+import { WEBSOCKET } from "@/config/websocketConfig";
 
 const addData = async (roomId: string) => {
-  console.log("addData", roomId);
+  const message = {
+    roomId: roomId,
+    command: "add",
+  } as Message;
+
+  await WEBSOCKET.send(JSON.stringify(message));
 };
 
 const getData = async (roomId: string) => {
-  console.log("getData", roomId);
+  const message = {
+    roomId: roomId,
+    command: "get",
+  } as Message;
+
   if (roomId !== "") {
-    return roomId;
+    await WEBSOCKET.send(JSON.stringify(message));
   } else {
     throw new Error(`room ${roomId} doesn't seem to exist...`);
   }
 };
 
 const updateData = async (roomId: string, content: string) => {
-  console.log("updateData", roomId, content);
+  const message = {
+    roomId: roomId,
+    command: "update",
+    content: content,
+  } as Message;
+
+  await WEBSOCKET.send(JSON.stringify(message));
 };
 
 const unsubscribeData = (
   roomId: string,
   setContent: (content: string) => void
 ) => {
-  return () => {
-    console.log("unsubscribeData", roomId, setContent("test"));
-  };
+  return WEBSOCKET.unsubscribe(roomId, setContent);
 };
 
 const deleteData = async (roomId: string) => {
-  console.log("deleteData", roomId);
+  const message = {
+    roomId: roomId,
+    command: "delete",
+  } as Message;
+
+  await WEBSOCKET.send(JSON.stringify(message));
 };
 
 export const websocketService: Service = {
